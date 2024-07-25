@@ -1,0 +1,149 @@
+Skip to main content
+Loan_Prediction_Data_Preparation.ipynb
+Loan_Prediction_Data_Preparation.ipynb_Notebook unstarred
+Last saved at 11:08 PM
+Pre-processing Steps
+1. Filling the missing values
+2. Converting categories to numbers
+3. Bring all the variables in range 0 to 1
+
+[ ]
+# importing required libraries
+import pandas as pd
+
+[ ]
+# check version on pandas
+print('Version of pandas:', pd.__version__)
+Version of pandas: 0.25.3
+
+[ ]
+# reading the loan prediction data
+data = pd.read_csv('loan_data.csv')
+
+[ ]
+# looking at the first five rows of the data
+data.head()
+
+
+[ ]
+# shape of the data
+data.shape
+(614, 13)
+
+[ ]
+# checking missing values in the data
+data.isnull().sum()
+Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount           22
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+
+[ ]
+# data types of the variables
+data.dtypes
+Loan_ID               object
+Gender                object
+Married               object
+Dependents            object
+Education             object
+Self_Employed         object
+ApplicantIncome        int64
+CoapplicantIncome    float64
+LoanAmount           float64
+Loan_Amount_Term     float64
+Credit_History       float64
+Property_Area         object
+Loan_Status           object
+dtype: object
+1. Filling the missing values
+Categorical Data: Mode
+
+[ ]
+# filling missing values of categorical variables with mode
+
+data['Gender'].fillna(data['Gender'].mode()[0], inplace=True)
+
+data['Married'].fillna(data['Married'].mode()[0], inplace=True)
+
+data['Dependents'].fillna(data['Dependents'].mode()[0], inplace=True)
+
+data['Self_Employed'].fillna(data['Self_Employed'].mode()[0], inplace=True)
+
+data['Loan_Amount_Term'].fillna(data['Loan_Amount_Term'].mode()[0], inplace=True)
+
+data['Credit_History'].fillna(data['Credit_History'].mode()[0], inplace=True)
+Continuous Data: Mean
+
+[ ]
+# filling missing values of continuous variables with mean
+data['LoanAmount'].fillna(data['LoanAmount'].mean(), inplace=True)
+
+[ ]
+# checking missing values after imputation
+data.isnull().sum()
+Loan_ID               0
+Gender               13
+Married               3
+Dependents           15
+Education             0
+Self_Employed        32
+ApplicantIncome       0
+CoapplicantIncome     0
+LoanAmount            0
+Loan_Amount_Term     14
+Credit_History       50
+Property_Area         0
+Loan_Status           0
+dtype: int64
+2. Converting categories to numbers
+
+[ ]
+# converting the categories into numbers using map function
+data['Gender'] = data['Gender'].map({'Male': 0, 'Female': 1})
+data['Married'] = data['Married'].map({'No': 0, 'Yes': 1})
+data['Dependents'] = data['Dependents'].map({'0': 0, '1': 1, '2': 2, '3+': 3})
+data['Education'] = data['Education'].map({'Graduate': 1, 'Not Graduate': 0})
+data['Self_Employed'] = data['Self_Employed'].map({'No': 0, 'Yes': 1})
+data['Property_Area'] = data['Property_Area'].map({'Rural': 0, 'Semiurban': 1, 'Urban': 2})
+data['Loan_Status'] = data['Loan_Status'].map({'N': 0, 'Y': 1})
+
+[ ]
+data.head()
+
+3. Bringing all the variables in range 0 to 1
+
+
+
+[ ]
+# bringing variables in the range 0 to 1
+data['Dependents']=(data['Dependents']-data['Dependents'].min())/(data['Dependents'].max()-data['Dependents'].min())
+
+[ ]
+# applying for loop to bring all the variables in range 0 to 1
+
+for i in data.columns[1:]:
+    data[i] = (data[i] - data[i].min()) / (data[i].max() - data[i].min())
+
+[ ]
+# again looking at first five rows of pre-processed data
+data.head()
+
+
+[ ]
+# saving the pre-processed data
+data.to_csv('loan_prediction_data.csv', index=False)
+
+[ ]
+
+Start coding or generate with AI.
+Colab paid products - Cancel contracts here
