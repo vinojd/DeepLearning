@@ -155,6 +155,8 @@ Steps to build a Neural Network using Keras
 5. Training the model
 6. Evaluating model performance on training and validation set
 
+
+1. Loading the dataset
 # importing the required libraries
 import pandas as pd
 import numpy as np
@@ -195,7 +197,7 @@ y = data['Loan_Status']
 X.shape, y.shape
 
 
-
+2. Creating training and validation set
 # Creating training and validation set
 
 # stratify will make sure that the distribution of classes in train and validation set it similar
