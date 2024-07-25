@@ -144,5 +144,16 @@ data.head()
 data.to_csv('loan_prediction_data.csv', index=False)
 
 
+Steps to build a Neural Network using Kears
+a) Load the Data set
+b) Create training and validation set
+c) Defining the architecture of the model
+d) Compile the model (define loss/cost function, optimizer)
+e) Training the Model
+f) Evaluate model performance on both training and validation set
+
+
+
+
 
 
